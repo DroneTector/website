@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DroneTector | Advanced Drone Detection Radar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Roboto&family=Electrolize&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    :root {
+      --primary-color: #171A24;
+      --accent-color: #FFA500;
+      --secondary-accent-color: #4f40e0;
+      --text-color: #FFFFFF;
+      --secondary-text: #CCCCCC;
+    }
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: var(--primary-color);
+      color: var(--text-color);
+    }
+    #sponsors {
+      background-color: #d4d6f7;
+      width: 100%;
+      padding: 40px 20px;
+    }
+    header {
+      background: url('5053309.jpg') center/cover no-repeat;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3em;
+      margin: 0;
+    }
+    header p {
+      font-size: 1.2em;
+      max-width: 600px;
+      margin: 20px auto;
+    }
+    .cta-button {
+      background-color: var(--accent-color);
+      color: var(--primary-color);
+      padding: 15px 30px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .app-button {
+      background-color: transparent;
+      color: var(--accent-color);
+      padding: 10px 15px;
+      border: 2px solid var(--accent-color);
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .app-button:hover {
+        background-color: var(--accent-color);
+        color: var(--primary-color);
+        transition: 0.3s ease;
+    }
+    section:not(#sponsors) {
+      padding: 30px 15px;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .section-inner {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+    section h2 {
+      font-family: 'Electrolize', sans-serif;
+      font-weight: bold;
+      color: var(--secondary-accent-color);
+      margin-bottom: 20px;
+    }
+    section p {
+      color: var(--secondary-text);
+      line-height: 1.6;
+    }
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .feature {
+      flex: 1 1 300px;
+      background-color: #292930;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .feature h3 {
+      color: var(--accent-color);
+    }
+    footer {
+      background-color: #111;
+      color: var(--secondary-text);
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+    .footer-logo {
+      height: 135px; /* increase this if you want it even larger */
+    }
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2em;
+      }
+      .features {
+        flex-direction: column;
+      }
+    }
+
+    @keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    }
+
+    .fade-in {
+        opacity: 0;
+        animation: fadeInUp 1s ease forwards;
+    }
+
+    .fade-in.delay-1 { animation-delay: 0.2s; }
+    .fade-in.delay-2 { animation-delay: 0.4s; }
+    .fade-in.delay-3 { animation-delay: 0.6s; }
+
+
+    .carousel {
+        position: relative;
+        padding: 0;
+        box-sizing: border-box;
+        overflow: hidden;
+        margin: auto;
+        width: 100%;
+    }
+
+    .carousel-track {
+        display: flex;
+        transition: transform 0.5s ease;
+        width: 100%; /* 2 slides of 3 logos each */
+    }
+
+    .carousel-track a {
+        flex: 0 0 33.333%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .carousel-track img {
+        object-fit: contain;
+        width: 90%; /* ensures it fills its container proportionally */
+        padding: 0; /* remove internal space */
+        margin: 0 0px; /* optional: control horizontal spacing */
+        box-sizing: border-box;
+    }
+
+    .prev, .next {
+        position: absolute;
+        top: 80%;
+        background-color: rgba(0,0,0,0.3);
+        color: white;
+        font-size: 24px;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        z-index: 1;
+    }
+
+    .prev {
+        left: 10px;
+    }
+
+    .next {
+        right: 10px;
+    }
+
+    .dots {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .dot {
+        display: inline-block;
+        height: 12px;
+        width: 12px;
+        background-color: #bbb;
+        border-radius: 50%;
+        margin: 0 5px;
+        cursor: pointer;
+    }
+
+    .dot.active {
+        background-color: #717171;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>DroneTector</h1>
+    <p>High-resolution radar systems to accurately detect and rapidly quantify small drone threats</p>
+    <a href="#about" class="cta-button">Learn More</a>
+  </header>
+
+  <section id="about" class="fade-in delay-1">
+    <h2><b>About Us</b></h2>
+    <p>DroneTector is a fast-moving startup developing cutting-edge technologies to tackle the challenge of 
+      <strong>drone detection</strong>. Our <strong>high-resolution radar systems</strong> are designed to 
+      accurately detect and rapidly quantify small drone activity, addressing the increasing threats posed 
+      by drones in various sectors. From defence to airports, we protect modern airspace.
+    </p>
+  </section>
+
+  <section id="technology" class="fade-in delay-2">
+    <h2>Our Technology</h2>
+    <div class="features">
+      <div class="feature">
+        <h3>Real-Time Detection</h3>
+        <p>Our radar systems provide real-time detection and tracking of drones, ensuring immediate awareness of potential threats.</p>
+      </div>
+      <div class="feature">
+        <h3>Scalable Solutions</h3>
+        <p>Our technology is scalable and adaptable, suitable for various applications from defence to drone delivery services.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="sponsors" class="fade-in delay-2">
+    <div class="section-inner">
+        <h2>Supported by</h2>
+        <div class="carousel">
+            <button class="prev">&#10094;</button>
+            <div class="carousel-track">
+                <a href="https://enterprisehub.raeng.org.uk/" target="_blank">
+                    <img src="support logos/web logos/Royal-Acadamy-of-Engineering-LongGreen.png" alt="Logo of Royal Acadamy of Engineering, Enterprise Hub – DroneTector Sponsor">
+                </a>
+                <a href="https://www.gov.uk/government/organisations/defence-and-security-accelerator" target="_blank">
+                    <img src="support logos/web logos/DASAlongTrim.png" alt="Logo of DASA, Defence and Security Accelerator – DroneTector Sponsor">
+                </a>
+                <a href="https://www.conceptionx.org/" target="_blank">
+                    <img src="support logos/web logos/cxLongTrim.png" style="max-height: 60px;" alt="Logo of ConceptionX, PhD Deep Tech Startups – DroneTector Sponsor">
+                </a>
+                <a href="https://www.convergechallenge.com/" target="_blank">
+                    <img src="support logos/web logos/convergeRound.avif" alt="Logo of Converge Challenge – DroneTector Sponsor">
+                </a>
+                <a href="https://innovation.st-andrews.ac.uk/" target="_blank">
+                    <img src="support logos/web logos/StAInnovationBlack.webp" alt="Logo of St Andrews Innovation Ltd – DroneTector Sponsor">
+                </a>
+                <a href="https://www.st-andrews.ac.uk/" target="_blank">
+                    <img src="support logos/web logos/standard-vertical-black.png" alt="Logo of University of St Andrews – DroneTector Sponsor">
+                </a>
+                <a href="https://www.santander.co.uk/universities" target="_blank">
+                  <img src="support logos/web logos/logo_universities.svg" alt="Logo of Santander Universities – DroneTector Sponsor">
+                </a>
+                <a href="https://www.d3ip.net/" target="_blank">
+                    <img src="support logos/web logos/D3IP-logo.png" alt="Logo of D3IP – DroneTector Sponsor">
+                </a>
+                <a href="https://defencebattlelab.com/" target="_blank">
+                    <img src="support logos/web logos/battlelab-web-logo.svg" alt="Logo of BattleLab – DroneTector Sponsor">
+                </a>
+            </div>
+            <button class="next">&#10095;</button>
+        </div>
+        <div class="dots">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+        </div>
+    </div>
+  </section>
+
+ 
+  <section id="contact" class="fade-in delay-3">
+    <h2>Contact Us</h2>
+    <p>Whether you're an investor, potential partner, or just curious about what we're building—we'd love to hear from you.</p>
+    <p>
+        <p style="font-family: 'Source Code Pro', monospace;">Email us at:</p>&nbsp;&nbsp;&nbsp;
+        <a href="mailto:web-enquiries@DroneTector.com" style="color: var(--accent-color);">
+            <i class="fa fa-envelope" style="font-size:24px"></i>
+        </a>
+    </p>
+    <p>
+        <p style="font-family: 'Source Code Pro', monospace;">Connect with us on LinkedIn:</p>&nbsp;&nbsp;&nbsp;
+        <a href="https://linkedin.com/company/dronetector" target="_blank" style="color: var(--accent-color);">
+            <i class="fa fa-linkedin-square" style="font-size:28px"></i>
+        </a>
+    </p>
+  </section>
+
+  <footer>
+    <div class="footer-content">
+        <img src="DTlogo.png" alt="DroneTector logo" class="footer-logo">
+        <p>&copy; 2025 DroneTector. All rights reserved.</p>
+    </div>    
+  </footer>
+
+</body>
+</html>
+
+<script>
+    const track = document.querySelector('.carousel-track');
+    const carousel = document.querySelector('.carousel');
+    const prevBtn = document.querySelector('.prev');
+    const nextBtn = document.querySelector('.next');
+    const logos = track.querySelectorAll('a');
+    const visibleItems = 3;
+    const totalSlides = Math.ceil(logos.length / visibleItems);
+    let index = 0;
+  
+    const dotsContainer = document.querySelector('.dots');
+    dotsContainer.innerHTML = ''; // Clear existing dots
+    for (let i = 0; i < totalSlides; i++) {
+      const dot = document.createElement('span');
+      dot.classList.add('dot');
+      if (i === 0) dot.classList.add('active');
+      dot.addEventListener('click', () => {
+        index = i;
+        updateCarousel();
+      });
+      dotsContainer.appendChild(dot);
+    }
+    const dots = document.querySelectorAll('.dot');
+  
+    function updateCarousel() {
+      track.style.transform = `translateX(-${(index * 100)}%)`;
+      dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+    }
+  
+    prevBtn.addEventListener('click', () => {
+      index = (index === 0) ? totalSlides - 1 : index - 1;
+      updateCarousel();
+    });
+  
+    nextBtn.addEventListener('click', () => {
+      index = (index + 1) % totalSlides;
+      updateCarousel();
+    });
+  
+    carousel.addEventListener('mouseenter', () => clearInterval(autoSlide));
+    carousel.addEventListener('mouseleave', () => {
+      autoSlide = setInterval(() => {
+        index = (index + 1) % totalSlides;
+        updateCarousel();
+      }, 4000);
+    });
+  
+    let autoSlide = setInterval(() => {
+      index = (index + 1) % totalSlides;
+      updateCarousel();
+    }, 4000);
+</script>
+  
+
+<script>
+    const faders = document.querySelectorAll('.fade-in');
+  
+    const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.style.animationPlayState = 'running';
+        observer.unobserve(entry.target);
+      });
+    }, {
+      threshold: 0.1
+    });
+  
+    faders.forEach(fader => {
+      fader.style.animationPlayState = 'paused';
+      appearOnScroll.observe(fader);
+    });
+</script>
+  
+
+
+
