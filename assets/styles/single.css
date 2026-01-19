@@ -97,10 +97,23 @@ html[data-map-mode="cover"] body[data-page="single"]::before{ content:none; }
 
 /* Typewriter / rotating lede */
 .ledeRotate{
-  display:inline-block;
-  white-space: pre-line;
-  /* Reserve 2 lines so the layout doesn't jump while rotating phrases */
-  min-height: 3.2em;
+  display: inline-block;
+
+  /* Let the browser wrap naturally */
+  white-space: normal;
+
+  /* Make desktop line breaks look intentional */
+  text-wrap: balance;
+
+  /* Control measure so it breaks into 2 lines on desktop */
+  max-width: 56ch;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+
+  /* Reserve space so layout doesn't jump */
+  line-height: 1.6;
+  min-height: calc(2 * 1.6em); /* reserves 2 lines */
 }
 
 .alignRow{
@@ -300,4 +313,67 @@ html[data-map-mode="cover"] body[data-page="single"]::before{ content:none; }
   .taglineAccent, .footerLine{ position:static; }
   .taglineAccent{ margin: 18px 0 18px; }
   .footerLine{ margin: 0 0 16px; }
+}
+
+@media (max-width: 520px){
+  .deployGrid{
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* Split header: left half logo, right half buttons */
+  .singleNav .brand{
+    flex: 1 1 50%;
+    min-width: 0;              /* important: allows shrinking without pushing layout */
+  }
+
+  .singleNav .cta{
+    flex: 1 1 50%;
+    min-width: 0;
+    justify-content: flex-end; /* keep buttons to the right */
+  }
+
+  /* Logo fills available width (up to its half), height stays controlled */
+  .singleNav .brand img.brandLogo{
+    height: 54px;        /* adjust to taste */
+    width: 100%;
+    max-width: 100%;     /* <-- key: no fixed pixel cap */
+    object-fit: contain; /* keep aspect ratio */
+    display: block;
+  }
+
+  .singleNav .btn.demo{
+    padding: 0 12px;
+    font-size: 12px;
+    letter-spacing: .10em;
+    white-space: nowrap;
+  }
+
+  .singleNav .btn.iconBtn{
+    flex: 0 0 auto;
+    width: 38px;
+    height: 38px; /* optional, if you want perfect square */
+    padding: 0;
+  }
+
+  .ledeRotate{
+    max-width: 30ch;  /* adjusts wrap to phone width */
+    text-wrap: pretty; /* ok fallback if balance isn't supported */
+  }
+}
+
+
+@media (max-width: 380px){
+  .singleNav .brand img.brandLogo{
+    height: 48px;
+    max-width: 100%;
+  }
+  .singleNav .btn.demo{
+    font-size: 11.5px;
+    padding: 0 10px;
+  }
+  .ledeRotate{
+    min-height: calc(3 * 1.6em);
+  }
 }
