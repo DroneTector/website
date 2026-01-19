@@ -1,0 +1,15 @@
+/* NATO background layer (paired with the Serious UI typography + components).
+   Purpose: keep the NATO-style backdrop while using the same buttons/fonts/detections as v14-serious.
+*/
+
+body{
+  background:
+    radial-gradient(1000px 700px at 20% 15%, rgba(111,161,196,.10), rgba(0,0,0,0)),
+    radial-gradient(900px 600px at 80% 25%, rgba(141,181,154,.08), rgba(0,0,0,0)),
+    #050910;
+}
+
+/* World map: slightly more subdued to match the navy base */
+body[data-page="single"]::before{
+  filter: saturate(.65) brightness(.90) contrast(.98);
+}

@@ -1,0 +1,55 @@
+/* Serious variant — more restrained “officer brief” look
+   Keeps the VECTOR palette but reduces glow/flare and increases solidity. */
+
+:root{
+  --acc:#2E98E6;      /* slightly muted cyan */
+  --acc2:#4ED4A4;     /* subdued green */
+  --stroke: rgba(255,255,255,.18);
+  --stroke2: rgba(255,255,255,.26);
+  --radius: 14px;
+}
+
+/* Reduce visual noise */
+.grain{ opacity:.12; }
+
+/* World map: a touch more subdued */
+body[data-page="single"]::before{
+  /* Darken and desaturate the map silhouette so it blends with the background.
+     Tweak brightness()/opacity for future testing. */
+  opacity: 1;
+  filter: saturate(.65) brightness(.78) contrast(1.05);
+}
+
+/* Buttons: flatter, higher-contrast, less “glow” */
+.btn{ border-radius: 12px; }
+.btn:hover{ background: rgba(255,255,255,.09); }
+
+.btn.primary{
+  border-color: rgba(46,152,230,.60);
+  background: rgba(46,152,230,.20);
+}
+.btn.primary:hover{
+  border-color: rgba(46,152,230,.78);
+  background: rgba(46,152,230,.26);
+}
+
+.btn.demo{
+  letter-spacing: .12em;
+  text-shadow: none;
+}
+
+.btn .dot{
+  box-shadow: none;
+}
+
+/* Accent tagline: readable, minimal glow */
+.taglineAccent{
+  text-shadow: none;
+}
+
+/* Pills: a bit more “badge-like” */
+.deployPill{
+  border-color: rgba(255,255,255,.18);
+  background: rgba(255, 255, 255, 0);
+}
+.pillIcon{ box-shadow:none; }

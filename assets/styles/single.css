@@ -1,0 +1,303 @@
+/* Single-page landing overrides (based on v8 VECTOR) */
+
+:root{
+  --footerH: 44px;
+  --panelA: .18;
+  --panelB: .12;
+  --taglineBottom: 88px;
+}
+
+body[data-page="single"]{
+  overflow:hidden;
+  /* Match header + main width to the main panel */
+  --shell: min(900px, calc(100vw - 48px));
+}
+
+body[data-page="single"]::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  /* Lowered so South America sits closer to the footer line */
+  background: url("../img/world-map-silhouette.svg") no-repeat center 15% / 132vw auto;
+  /* Darken/quiet the map so text stays crisp. Tweak this first for intensity. */
+  opacity: .86;
+  z-index:-3;
+  pointer-events:none;
+}
+
+
+/* In canvas-cover mode, render the map on the canvas (above the grid), so disable the CSS map layer. */
+html[data-map-mode="cover"] body[data-page="single"]::before{ content:none; }
+
+
+.singleNav{
+  justify-content:space-between;
+  padding-top: 13px;  /* try 8–14px */
+}
+.singleNav .menu,
+.singleNav .mobileToggle{ display:none !important; }
+
+/* Header brand logo sizing (override base.css .brand img { width/height:40px }) */
+.singleNav .brand img.brandLogo{
+  height: 90px;      /* try 60–90 */
+  width: auto;
+  max-width: 260px;  /* prevents it from pushing the right buttons off-screen */
+  display: block;
+  /*outline: 2px solid red; /* debug */
+}
+
+/* Slightly stronger header CTAs on the single page */
+.singleNav .btn.primary{
+  border-color: rgba(0,210,255,.50);
+  background: linear-gradient(180deg, rgba(0,210,255,.34), rgba(0,210,255,.14));
+}
+.singleNav .btn.primary:hover{
+  border-color: rgba(0,210,255,.68);
+  background: linear-gradient(180deg, rgba(0,210,255,.42), rgba(0,210,255,.18));
+}
+
+.singleMain{
+  height: calc(100vh - var(--navH));
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  padding: 20px 0 18px;
+  position:relative;
+}
+
+.singlePanel{ width: 100%; }
+
+/* No main "box" — keep only the content. */
+.singlePanel{
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
+.singlePanel .panelInner{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+}
+
+.singlePanel .kicker{
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.singlePanel .lede{
+  max-width: 62ch;
+  margin-left:auto;
+  margin-right:auto;
+  margin-bottom: 10px; /* match h1->lede spacing */
+}
+
+
+/* Typewriter / rotating lede */
+.ledeRotate{
+  display:inline-block;
+  white-space: pre-line;
+  /* Reserve 2 lines so the layout doesn't jump while rotating phrases */
+  min-height: 3.2em;
+}
+
+.alignRow{
+  /* Stack: Get in touch button above deployment pills (centered) */
+  width: 100%;
+  margin: 0 auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+}
+
+
+.touchRow{
+  width: max-content;
+  margin: 0 auto;
+}
+
+.singleEmail{
+  width: auto; /* JS will size this to match the deployment row */
+  max-width: none;
+  margin: 0 auto;
+}
+
+.singleEmail input{
+  min-width: 180px;
+  /* less transparent for readability */
+  background: rgba(0,0,0,.36);
+  border-color: rgba(255,255,255,.22);
+}
+
+/* Accent (green) primary for Get in touch */
+.btn.accent{
+  border-color: rgba(107,255,207,.52);
+  background: linear-gradient(180deg, rgba(107,255,207,.34), rgba(107,255,207,.16));
+  box-shadow: 0 0 0 1px rgba(107,255,207,.08), 0 12px 40px rgba(0,0,0,.35);
+}
+.btn.accent:hover{
+  border-color: rgba(107,255,207,.70);
+  background: linear-gradient(180deg, rgba(107,255,207,.42), rgba(107,255,207,.20));
+}
+
+.btn.getInTouch{
+  font-weight: 800;
+  border-width: 2.5px;
+}
+
+.deployBlock{ margin-top: 0; }
+.deployTitle{
+  margin-top: 4px;
+  font-family: var(--mono);
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  font-size: 14px;
+  color: var(--fg1);
+  opacity:.92;
+}
+
+/* Pills aligned to the same left/right edges as the email form */
+.deployGrid{
+  width: max-content;
+  max-width: 100%;
+  display: flex;
+  gap: 12px;
+  margin: 12px auto 0;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.deployGrid .deployPill{ width: max-content; }
+
+.deployPill{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding: 12px 14px;
+  width:auto;
+}
+
+.deployPill h3{
+  margin: 0;
+  font-size: 14px;
+  font-weight: 750;
+  letter-spacing:.02em;
+}
+
+.pillIcon{
+  width: 12px;
+  height: 12px;
+  background: var(--acc2);
+  box-shadow: 0 0 18px rgba(0,255,149,.18);
+  opacity: .95;
+  flex: 0 0 auto;
+}
+.pillIcon.tri{ clip-path: polygon(50% 0%, 0% 100%, 100% 100%); }
+.pillIcon.diamond{ clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0 50%); }
+.pillIcon.pent{ clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%); }
+
+.supportBlock{ margin-top: 28px; }
+.supportStatic{
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  /* 3 columns on the second row (for logos 2–4) */
+  grid-template-columns: repeat(3, max-content);
+  /* gaps: row gap then column gap */
+  row-gap: 14px;
+  column-gap: 28px;
+  margin-top: 10px;
+}
+
+/* Support logos (no "bubbles" / plates — just the logos as links) */
+.supportLogo{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  backdrop-filter: none;
+}
+.supportLogo img{
+  height: 40px;
+  width: auto;
+  max-width: 360px;
+  display:block;
+  /* subtle separation on dark backgrounds without adding a plate */
+  filter: drop-shadow(0 6px 18px rgba(0,0,0,.38));
+}
+
+/* First logo sits alone on the first row and is centered */
+.supportStatic .supportLogo:first-child{
+  grid-column: 1 / -1;   /* span all columns */
+  justify-self: center;
+}
+
+/* Logos 2–4 use the 3-column grid row */
+.supportStatic .supportLogo:nth-child(n+2){
+  justify-self: center;
+}
+
+/* Make the first (top-row) logo bigger */
+.supportStatic .supportLogo:first-child img{
+  height: 52px;  /* pick your size */
+}
+
+@media (max-width: 720px){
+  .supportStatic{
+    grid-template-columns: repeat(2, max-content);
+    column-gap: 22px;
+  }
+  /* Put the 4th logo on its own third row if needed */
+  .supportStatic .supportLogo:nth-child(4){
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 420px){
+  .supportStatic{
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+  .supportStatic .supportLogo:nth-child(n+2){
+    grid-column: 1 / -1;
+  }
+}
+
+
+.taglineAccent{
+  color: var(--acc2);
+  font-weight: 800;
+  letter-spacing:.02em;
+  font-size: 18px;
+  text-shadow: 0 0 18px rgba(0,255,149,.18);
+  position:absolute;
+  bottom: var(--taglineBottom, 108px);
+  left: 0;
+  right: 0;
+  text-align:center;
+}
+
+.footerLine{
+  position:absolute;
+  bottom: 18px;
+  left: 0;
+  right: 0;
+  text-align:center;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+@media (max-width: 760px){
+  body[data-page="single"]{ overflow:auto; }
+  .singleMain{ height:auto; min-height: calc(100vh - var(--navH)); }
+  .taglineAccent, .footerLine{ position:static; }
+  .taglineAccent{ margin: 18px 0 18px; }
+  .footerLine{ margin: 0 0 16px; }
+}

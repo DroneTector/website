@@ -1,0 +1,20 @@
+/* Theme: VECTOR — sharper contrast & “operations room” feel */
+:root{
+  --bg0:#04070C;
+  --bg1:#06101D;
+  --fg0:#F1F7FF;
+  --fg1:#C7D6EF;
+  --muted:#8FA2C6;
+  --acc:#30A6FF;
+  --acc2:#6BFFCF;
+  --warn:#FFD07A;
+  --alert:#FF4D5A;
+  --stroke: rgba(255,255,255,.14);
+  --stroke2: rgba(255,255,255,.22);
+}
+.panel::before{
+  opacity:1;
+  background: radial-gradient(680px 460px at 20% 0%, rgba(48,166,255,.18), transparent 58%),
+              radial-gradient(520px 380px at 92% 40%, rgba(107,255,207,.12), transparent 62%),
+              radial-gradient(420px 340px at 55% 120%, rgba(255,208,122,.08), transparent 62%);
+}
