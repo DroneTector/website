@@ -339,10 +339,12 @@ html[data-map-mode="cover"] body[data-page="single"]::before{ content:none; }
     grid-template-columns: 1fr 1fr;  /* left half, right half */
     align-items: center;
     gap: 10px;
+    column-gap: 12px; /* space between the two halves */
   }
 
   .singleNav .brand{
     min-width: 0;
+    overflow: hidden;
     max-width: 100%;
   }
 
@@ -350,7 +352,7 @@ html[data-map-mode="cover"] body[data-page="single"]::before{ content:none; }
     min-width: 0;
     max-width: 100%;
     justify-content: flex-end;
-    gap: 10px;
+    gap: 6px; /* space between  */
   }
 
   .singleNav .brand img.brandLogo{
@@ -362,17 +364,21 @@ html[data-map-mode="cover"] body[data-page="single"]::before{ content:none; }
   }
 
   .singleNav .btn.iconBtn{
-    width: 38px;
-    height: 38px;
+    width: 34px;
+    height: 34px;
     padding: 0;
     flex: 0 0 auto;
   }
 
   .singleNav .btn.demo{
-    padding: 0 10px;
-    font-size: 12px;
-    letter-spacing: .10em;
+    flex: 1 1 auto;        /* it can shrink */
+    min-width: 0;          /* IMPORTANT: allows shrinking in flex/grid */
+    padding: 0 10px;       /* slightly smaller */
+    font-size: 11.5px;     /* slightly smaller */
+    letter-spacing: .09em;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     max-width: 100%;
   }
 }
