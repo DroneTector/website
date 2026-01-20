@@ -33,6 +33,8 @@ html[data-map-mode="cover"] body[data-page="single"]::before{ content:none; }
 .singleNav{
   justify-content:space-between;
   padding-top: 13px;  /* try 8–14px */
+  flex-wrap: nowrap;     /* keep it one line */
+  gap: 10px;
 }
 .singleNav .menu,
 .singleNav .mobileToggle{ display:none !important; }
@@ -92,18 +94,17 @@ html[data-map-mode="cover"] body[data-page="single"]::before{ content:none; }
   margin-left:auto;
   margin-right:auto;
   margin-bottom: 10px; /* match h1->lede spacing */
+  width: 100%; /* Ensure the lede line has a stable width even when empty (fixes wrap measurement) */
 }
 
 
 /* Typewriter / rotating lede */
 .ledeRotate{
-  display: inline-block;
+  display: block; /* Make the rotating span take the lede width (so JS and CSS wrap match) */
+  width: 100%;
 
-  /* Let the browser wrap naturally */
-  white-space: normal;
-
-  /* Make desktop line breaks look intentional */
-  text-wrap: balance;
+  /* IMPORTANT: allow real line breaks + wrapping */
+  white-space: pre-wrap;
 
   /* Control measure so it breaks into 2 lines on desktop */
   max-width: 56ch;
@@ -113,7 +114,9 @@ html[data-map-mode="cover"] body[data-page="single"]::before{ content:none; }
 
   /* Reserve space so layout doesn't jump */
   line-height: 1.6;
-  min-height: calc(2 * 1.6em); /* reserves 2 lines */
+  /* IMPORTANT: let JS set the *exact* min-height */
+  min-height: 0;
+  /*min-height: calc(2 * 1.6em); /* reserves 2 lines */
 }
 
 .alignRow{
@@ -308,9 +311,18 @@ html[data-map-mode="cover"] body[data-page="single"]::before{ content:none; }
 }
 
 @media (max-width: 760px){
-  body[data-page="single"]{ overflow:auto; }
-  .singleMain{ height:auto; min-height: calc(100vh - var(--navH)); }
-  .taglineAccent, .footerLine{ position:static; }
+  /* Keep BODY non-scrolling so fixed layers (map/grid) cover the whole viewport */
+  body[data-page="single"]{ overflow: hidden; }
+
+  /* Make the main content scroll instead */
+  .singleMain{
+    height: calc(100vh - var(--navH));
+    min-height: 0;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .taglineAccent, .footerLine{ position: static; }
   .taglineAccent{ margin: 18px 0 18px; }
   .footerLine{ margin: 0 0 16px; }
 }
@@ -326,12 +338,14 @@ html[data-map-mode="cover"] body[data-page="single"]::before{ content:none; }
   .singleNav .brand{
     flex: 1 1 50%;
     min-width: 0;              /* important: allows shrinking without pushing layout */
+    overflow: hidden;      /* prevent overlap */
   }
 
   .singleNav .cta{
     flex: 1 1 50%;
     min-width: 0;
     justify-content: flex-end; /* keep buttons to the right */
+    overflow: hidden;      /* prevent overlap */
   }
 
   /* Logo fills available width (up to its half), height stays controlled */
@@ -348,6 +362,7 @@ html[data-map-mode="cover"] body[data-page="single"]::before{ content:none; }
     font-size: 12px;
     letter-spacing: .10em;
     white-space: nowrap;
+    max-width: 100%;
   }
 
   .singleNav .btn.iconBtn{
@@ -358,9 +373,16 @@ html[data-map-mode="cover"] body[data-page="single"]::before{ content:none; }
   }
 
   .ledeRotate{
-    max-width: 30ch;  /* adjusts wrap to phone width */
+    max-width: 26ch;  /* adjusts wrap to phone width */
     text-wrap: pretty; /* ok fallback if balance isn't supported */
+    /*let the js handle this
+    /*min-height: calc(3 * 1.6em); /* reserve 3 lines on phones */
   }
+
+  /* body[data-page="single"]::before{
+    background-position: center 10%;  /* move the silhouette DOWN */
+  /*  background-size: 170vw auto;      /* optional: make it a bit larger */
+  /* } */
 }
 
 
@@ -372,8 +394,6 @@ html[data-map-mode="cover"] body[data-page="single"]::before{ content:none; }
   .singleNav .btn.demo{
     font-size: 11.5px;
     padding: 0 10px;
-  }
-  .ledeRotate{
-    min-height: calc(3 * 1.6em);
+    max-width: 100%;
   }
 }
