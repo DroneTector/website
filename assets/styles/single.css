@@ -316,10 +316,10 @@ html[data-map-mode="cover"] body[data-page="single"]::before{ content:none; }
 
   /* Make the main content scroll instead */
   .singleMain{
-    height: calc(100vh - var(--navH));
-    min-height: 0;
-    overflow: auto;
+    height: calc(100svh - var(--navH));
+    overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    min-height: 0;
   }
 
   .taglineAccent, .footerLine{ position: static; }
@@ -334,55 +334,47 @@ html[data-map-mode="cover"] body[data-page="single"]::before{ content:none; }
     gap: 10px;
   }
 
-  /* Split header: left half logo, right half buttons */
+  .singleNav{
+    display: grid;
+    grid-template-columns: 1fr 1fr;  /* left half, right half */
+    align-items: center;
+    gap: 10px;
+  }
+
   .singleNav .brand{
-    flex: 1 1 50%;
-    min-width: 0;              /* important: allows shrinking without pushing layout */
-    overflow: hidden;      /* prevent overlap */
+    min-width: 0;
+    max-width: 100%;
   }
 
   .singleNav .cta{
-    flex: 1 1 50%;
     min-width: 0;
-    justify-content: flex-end; /* keep buttons to the right */
-    overflow: hidden;      /* prevent overlap */
+    max-width: 100%;
+    justify-content: flex-end;
+    gap: 10px;
   }
 
-  /* Logo fills available width (up to its half), height stays controlled */
   .singleNav .brand img.brandLogo{
-    height: 54px;        /* adjust to taste */
     width: 100%;
-    max-width: 100%;     /* <-- key: no fixed pixel cap */
-    object-fit: contain; /* keep aspect ratio */
-    display: block;
+    max-width: 100%;
+    height: clamp(44px, 12vw, 54px);
+    object-fit: contain;
+    display:block;
+  }
+
+  .singleNav .btn.iconBtn{
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    flex: 0 0 auto;
   }
 
   .singleNav .btn.demo{
-    padding: 0 12px;
+    padding: 0 10px;
     font-size: 12px;
     letter-spacing: .10em;
     white-space: nowrap;
     max-width: 100%;
   }
-
-  .singleNav .btn.iconBtn{
-    flex: 0 0 auto;
-    width: 38px;
-    height: 38px; /* optional, if you want perfect square */
-    padding: 0;
-  }
-
-  .ledeRotate{
-    max-width: 26ch;  /* adjusts wrap to phone width */
-    text-wrap: pretty; /* ok fallback if balance isn't supported */
-    /*let the js handle this
-    /*min-height: calc(3 * 1.6em); /* reserve 3 lines on phones */
-  }
-
-  /* body[data-page="single"]::before{
-    background-position: center 10%;  /* move the silhouette DOWN */
-  /*  background-size: 170vw auto;      /* optional: make it a bit larger */
-  /* } */
 }
 
 
