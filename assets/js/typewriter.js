@@ -79,6 +79,17 @@
     return new Promise((r) => setTimeout(r, ms));
   }
 
+  async function waitForLayout(el){
+    // wait at least 2 frames so layout is stable
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+
+    // wait until it has a meaningful width (max ~500ms)
+    const start = performance.now();
+    while (el.getBoundingClientRect().width < 50 && performance.now() - start < 500) {
+      await new Promise(r => requestAnimationFrame(r));
+    }
+  }
+
   async function runRotate(el) {
     if (el.dataset.twInit) return;
     el.dataset.twInit = "1";
@@ -130,7 +141,16 @@
       return normalized;
     }
 
+    await waitForLayout(el);
+    // If screen resized, recompute wrap/height so it stays stable (cheap check each loop)
     let wrapped = computeWrappedPhrases();
+    // Recompute once fonts are fully loaded (prevents 1-word-per-line on first paint in Safari/Firefox mobile)
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => {
+        ctx.font = getCanvasFont(el);      // update canvas font metrics
+        wrapped = computeWrappedPhrases(); // re-wrap + re-set minHeight
+      });
+    }
     window.addEventListener("resize", () => {
       wrapped = computeWrappedPhrases();
     }, { passive: true });
@@ -152,10 +172,6 @@
       await sleep(gap);
 
       idx++;
-
-      // // If screen resized, recompute wrap/height so it stays stable
-      // // (cheap check each loop)
-      // wrapped = computeWrappedPhrases();
     }
   }
 
