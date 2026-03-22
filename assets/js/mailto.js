@@ -44,15 +44,16 @@
 
   function buildMailto(){
     const to = getContactEmail();
-    const subject = 'Interested in DroneTector';
-    const body = [
-      'Hi DroneTector team,',
-      '',
-      "I'd like to chat. Here's some info about me and my calendar availability.",
-      '—'
-    ].join('\n');
+    // const subject = 'Interested in DroneTector';
+    // const body = [
+    //   'Hi DroneTector team,',
+    //   '',
+    //   "I'd like to chat. Here's some info about me and my calendar availability.",
+    //   '—'
+    // ].join('\n');
 
-    return `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    // return `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    return `mailto:${to}`;
   }
 
   btn.addEventListener('click', function(){

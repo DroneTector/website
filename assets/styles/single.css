@@ -4,11 +4,11 @@
   --footerH: 44px;
   --panelA: .18;
   --panelB: .12;
-  --taglineBottom: 88px;
 }
 
 body[data-page="single"]{
-  overflow:hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   /* Match header + main width to the main panel */
   --shell: min(900px, calc(100vw - 48px));
 }
@@ -41,11 +41,10 @@ html[data-map-mode="cover"] body[data-page="single"]::before{ content:none; }
 
 /* Header brand logo sizing (override base.css .brand img { width/height:40px }) */
 .singleNav .brand img.brandLogo{
-  height: 90px;      /* try 60–90 */
+  height: clamp(90px, 11vh, 115px);
   width: auto;
   max-width: 260px;  /* prevents it from pushing the right buttons off-screen */
   display: block;
-  /*outline: 2px solid red; /* debug */
 }
 
 /* Slightly stronger header CTAs on the single page */
@@ -59,7 +58,9 @@ html[data-map-mode="cover"] body[data-page="single"]::before{ content:none; }
 }
 
 .singleMain{
-  height: calc(100vh - var(--navH));
+  min-height: calc(100vh - var(--navH));   /* fallback */
+  min-height: calc(100svh - var(--navH));  /* modern viewport unit */
+  height: auto;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -126,7 +127,7 @@ html[data-map-mode="cover"] body[data-page="single"]::before{ content:none; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 26px;
+  gap: clamp(16px, 2.5vh, 26px);
 }
 
 
@@ -162,6 +163,18 @@ html[data-map-mode="cover"] body[data-page="single"]::before{ content:none; }
 .btn.getInTouch{
   font-weight: 800;
   border-width: 2.5px;
+}
+
+/* Red variant for the Watch video button */
+.btn.primary.videoBtn{
+  border-color: rgba(255, 0, 0, .60);
+  background: linear-gradient(180deg, rgba(255, 0, 0, .18), rgba(255, 0, 0, .07));
+  box-shadow: 0 0 0 1px rgba(255, 0, 0, .08), 0 12px 40px rgba(0,0,0,.35);
+}
+
+.btn.primary.videoBtn:hover{
+  border-color: rgba(255, 0, 0, .78);
+  background: linear-gradient(180deg, rgba(255, 0, 0, .24), rgba(255, 0, 0, .10));
 }
 
 .deployBlock{ margin-top: 0; }
@@ -216,7 +229,7 @@ html[data-map-mode="cover"] body[data-page="single"]::before{ content:none; }
 .pillIcon.diamond{ clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0 50%); }
 .pillIcon.pent{ clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%); }
 
-.supportBlock{ margin-top: 28px; }
+.supportBlock{ margin-top: clamp(18px, 3vh, 28px); }
 .supportStatic{
   display: grid;
   justify-content: center;
@@ -241,10 +254,10 @@ html[data-map-mode="cover"] body[data-page="single"]::before{ content:none; }
   backdrop-filter: none;
 }
 .supportLogo img{
-  height: 40px;
+  height: clamp(40px, 5.4vh, 54px);
   width: auto;
-  max-width: 360px;
-  display:block;
+  max-width: 420px;
+  display: block;
   /* subtle separation on dark backgrounds without adding a plate */
   filter: drop-shadow(0 6px 18px rgba(0,0,0,.38));
 }
@@ -262,7 +275,7 @@ html[data-map-mode="cover"] body[data-page="single"]::before{ content:none; }
 
 /* Make the first (top-row) logo bigger */
 .supportStatic .supportLogo:first-child img{
-  height: 52px;  /* pick your size */
+  height: clamp(50px, 6.8vh, 68px);
 }
 
 @media (max-width: 720px){
@@ -286,25 +299,27 @@ html[data-map-mode="cover"] body[data-page="single"]::before{ content:none; }
   }
 }
 
+.taglineAccent,
+.footerLine{
+  position: static;
+  left: auto;
+  right: auto;
+  bottom: auto;
+}
 
 .taglineAccent{
+  margin-top: auto;
+  padding-top: 24px;
   color: var(--acc2);
   font-weight: 800;
   letter-spacing:.02em;
   font-size: 18px;
   text-shadow: 0 0 18px rgba(0,255,149,.18);
-  position:absolute;
-  bottom: var(--taglineBottom, 108px);
-  left: 0;
-  right: 0;
   text-align:center;
 }
 
 .footerLine{
-  position:absolute;
-  bottom: 18px;
-  left: 0;
-  right: 0;
+  margin-top: 14px;
   text-align:center;
   color: var(--muted);
   font-size: 13px;
@@ -371,7 +386,8 @@ html[data-map-mode="cover"] body[data-page="single"]::before{ content:none; }
   }
 
   .singleNav .btn.demo{
-    flex: 1 1 auto;        /* it can shrink */
+    flex: 0 1 auto;        /* do not grow wider than needed */
+    width: auto;
     min-width: 0;          /* IMPORTANT: allows shrinking in flex/grid */
     padding: 0 10px;       /* slightly smaller */
     font-size: 11.5px;     /* slightly smaller */
